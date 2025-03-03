@@ -17,9 +17,6 @@
   },
   "homepage": "https://github.com/Kisrym/UnBlusas#readme",
   "description": "",
-  "devDependencies": {
-    "parcel": "^2.13.3"
-  },
   "dependencies": {
     "three": "^0.174.0"
   }
