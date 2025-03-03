@@ -7,7 +7,7 @@
     <title>UnBlusas</title>
 </head>
     <body>
-        <header>
+        <header id="header-container">
             <div class="logo_container">
             <a href="index.html">
                 <img src="src/images/unb_icone.png" alt="Logo da UnB" class="logo">
@@ -26,6 +26,7 @@
                 <div class="welcome">
                     <h2>Bem-vindo ao UnBlusas!</h2>
                     <p>Personalize suas próprias camisas da Universidade de Brasília com o UnBlusas! Escolha cores, estampas e crie um visual único para representar o seu curso.</p>
+                    <a href="src/pages/configurador.html" class="botao_chart">Comece aqui</a>
                 </div>
                 <div class="camiseta_container">
                     <img src="src/images/camiseta_unb.png" alt="Camiseta da UnB" class="camiseta">
@@ -39,15 +40,19 @@
                 <div class="charts">
                     <div class="configurador_chart">
                         <img src="src/images/temp_camisa_1.png" alt="Camisa configurações">
-                        <h2>Configurador</h2>
-                        <p>Comece a criar uniformes personalizados online.<br>Escolha um produto e personalize-o como quiser!</p>
+                        <div>
+                            <h2>Configurador</h2>
+                            <p>Comece a criar uniformes personalizados online.<br>Escolha um produto e personalize-o como quiser!</p>
+                        </div>
                         <a href="src/pages/configurador.html" class="botao_chart">Comece aqui</a>
                     </div>
                     <div class="design_chart">
                         <img src="src/images/temp_camisa_2.png" alt="Camisa design">
-                        <h2>Ótimo Design</h2>
-                        <p>Solicite um design personalizado e sob medida.<br>Nossos designers tornarão isso realidade!</p>
-                        <a href="src/pages/produtos.html" class="botao_chart">Pedido</a>
+                        <div>
+                            <h2>Ótimo Design</h2>
+                            <p>Solicite um design personalizado e sob medida.<br>Nossos designers tornarão isso realidade!</p>
+                        </div>
+                            <a href="src/pages/produtos.html" class="botao_chart">Pedido</a>
                     </div>
                 </div>
             </div>
@@ -55,6 +60,6 @@
         <footer>
             <p>Desenvolvido por <a href="https://github.com/Kisrym">Kaio Santos</a>, <a href="https://github.com/CaiodFleury">Caio Dias</a> e <a href="https://github.com/CorsaRebaixado">Enzo Cardoso</a></p>
         </footer>
-         <!-- <script src="scripts/header.js"></script> -->
+         <script src="src/scripts/header.js"></script>
     </body>
 </html>
