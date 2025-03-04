@@ -22,7 +22,7 @@ topLight.position.set(0, 0, 100) //top-left-ish
 topLight.castShadow = true;
 scene.add(topLight);
 
-const light2 = new THREE.DirectionalLight(0xffffff,10);
+const light2 = new THREE.DirectionalLight(0xffffff,8);
 light2.position.set(0, 0, -10);
 light2.castShadow = true;
 scene.add(light2);
