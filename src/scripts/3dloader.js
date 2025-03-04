@@ -5,7 +5,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 const container = document.getElementById('three-container');
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
-document.body.appendChild(renderer.domElement);
+container.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 
@@ -36,6 +36,7 @@ function animate(time) {
   renderer.render(scene, camera);
 }
 window.addEventListener('resize', updateSize);
+updateSize();
 function updateSize() {
   const width = container.clientWidth;
   const height = container.clientHeight;

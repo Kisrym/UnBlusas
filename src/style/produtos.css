@@ -6,24 +6,20 @@
 }
 #three-container {
     width: 100%;
-    height: 100vh; /* Ocupa toda a altura da viewport */
+    height: 100vh; /* Adjust height as needed */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     position: relative;
+    overflow: hidden;
 }
 
-/* O contêiner interno ocupa todo o espaço do #three-container */
 #Container3D {
-    width: 100%;
-    height: 100%;
-    position: absolute; /* Evita que o canvas seja empurrado para baixo */
-    top: 0;
-    left: 0;
+    width: 80%; /* Adjust to the size you want */
+    height: 80vh; /* Adjust to the height you want */
+    position: static; /* Ensures proper positioning */
 }
 
-/* Garante que o canvas ocupe todo o #Container3D */
 canvas {
     display: block;
     width: 100%;
@@ -31,4 +27,97 @@ canvas {
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.charts {
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.charts p {
+    font-size: 13px;
+    font-weight: lighter;
+}
+
+.configurador_chart {
+    background: radial-gradient(circle at center center, rgb(246, 246, 246), rgb(231, 234, 245) 100%);
+    padding: 36px 36px 36px 36px;
+    border-radius: 16px;
+}
+
+.config_chart {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgb(255, 243, 201) 2%, rgb(250, 233, 153) 97%);
+    padding: 36px 36px 36px 36px;
+    border-radius: 16px;
+}
+
+/* Footer */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+#prompt-container {
+    background: rgba(0, 0, 0, 0.85);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    width: 400px;
+    max-width: 90%;
+}
+
+/* Título */
+h2 {
+    margin: 0 0 15px;
+    font-size: 1.5rem;
+}
+
+/* Área de entrada do prompt */
+textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    resize: none;
+    outline: none;
+}
+
+/* Botão de gerar textura */
+#generate-button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    background: #4CAF50;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Efeito hover no botão */
+#generate-button:hover {
+    background: #45a049;
 }
