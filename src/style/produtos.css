@@ -4,3 +4,31 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+#three-container {
+    width: 100%;
+    height: 100vh; /* Ocupa toda a altura da viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* O contêiner interno ocupa todo o espaço do #three-container */
+#Container3D {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Evita que o canvas seja empurrado para baixo */
+    top: 0;
+    left: 0;
+}
+
+/* Garante que o canvas ocupe todo o #Container3D */
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
