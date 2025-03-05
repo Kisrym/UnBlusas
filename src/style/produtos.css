@@ -6,7 +6,7 @@
 }
 #three-container {
     width: 100%;
-    height: 100vh; /* Adjust height as needed */
+    height: calc(100vh - 100px);
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
