@@ -8,9 +8,9 @@ let gltfModel = null;
 let zoomSpeed = 0.2; // A velocidade do zoom
 
 // Configuração do Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.shadowMap.enabled = true; // Ativa sombras
-renderer.shadowMap.type = THREE.VSMShadowMap; // Melhora a qualidade da sombra
+const renderer = new THREE.WebGLRenderer({ alpha: true, precision: 'lowp', powerPreference: 'low-power', reverseDepthBuffer: true });
+//renderer.shadowMap.enabled = true; // Ativa sombras
+//renderer.shadowMap.type = THREE.VSMShadowMap; // Melhora a qualidade da sombra
 
 const container = document.getElementById('three-container');
 renderer.setSize(container.clientWidth, container.clientHeight);
@@ -23,10 +23,10 @@ const scene = new THREE.Scene();
 // Criar Luz Direcional
 const topLight = new THREE.DirectionalLight(0xffffff, 6);
 topLight.position.set(5, 5, 5);
-topLight.castShadow = true;
-topLight.shadow.mapSize.width = 4096;
-topLight.shadow.mapSize.height = 4096;
-topLight.shadow.radius = 6;
+//topLight.castShadow = true;
+// topLight.shadow.mapSize.width = 4096;
+// topLight.shadow.mapSize.height = 4096;
+//topLight.shadow.radius = 6;
 scene.add(topLight);
 
 // Criar Luz Ambiente
@@ -47,7 +47,7 @@ loader.load(
     // Ativar sombras para o modelo
     gltfModel.traverse((child) => {
       if (child.isMesh) {
-        child.castShadow = true;
+       // child.castShadow = true;
       }
     });
 
