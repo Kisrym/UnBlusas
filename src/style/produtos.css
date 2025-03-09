@@ -106,7 +106,7 @@ textarea {
         height: 40vh;
     }
     .configurador {
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
     .configurador-container {
         width: 90%;
