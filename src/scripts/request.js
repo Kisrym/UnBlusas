@@ -1,9 +1,7 @@
 
-document.getElementById('botaoPedido').addEventListener('click', () => {
-    // temporario
-    const prompt = 'A beautiful sunset over the city of São Paulo, Brazil.';
+document.getElementById('generate-button').addEventListener('click', () => {
+    const prompt = document.getElementById('texture-prompt').value;
     const size = '1024x1024';
-    //
 
     fetch('http://localhost:5000/generateimage', {
         method: 'POST',

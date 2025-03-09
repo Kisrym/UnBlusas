@@ -94,3 +94,22 @@ textarea {
     background: white;
     color: black;
 }
+
+@media (max-width: 768px) {
+    #Container3D {
+        height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    #Container3D {
+        height: 40vh;
+    }
+    .configurador {
+        flex-direction: column;
+    }
+    .configurador-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}
