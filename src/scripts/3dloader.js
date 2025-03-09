@@ -1,123 +1,148 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 
-let isMouseDown = false;
-let lastMouseX = 0;
-let lastMouseY = 0;
-let gltfModel = null;
-let zoomSpeed = 0.2; // A velocidade do zoom
+const container = document.getElementById('three-container');
+
+// Estado global para interações
+const state = {
+    isInteracting: false,
+    lastX: 0,
+    lastY: 0,
+    initialPinchDistance: null,
+    gltfModel: null,
+    zoomSpeed: 0.2,
+};
 
 // Configuração do Renderer
-const renderer = new THREE.WebGLRenderer({ alpha: true, precision: 'lowp', powerPreference: 'low-power', reverseDepthBuffer: true });
-//renderer.shadowMap.enabled = true; // Ativa sombras
-//renderer.shadowMap.type = THREE.VSMShadowMap; // Melhora a qualidade da sombra
-
-const container = document.getElementById('three-container');
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 container.appendChild(renderer.domElement);
 
 // Criar Cena
 const scene = new THREE.Scene();
 
-// Criar Luz Direcional
-const topLight = new THREE.DirectionalLight(0xffffff, 6);
+// Criar Luzes
+const topLight = new THREE.DirectionalLight(0xffffff, 4);
 topLight.position.set(5, 5, 5);
-//topLight.castShadow = true;
-// topLight.shadow.mapSize.width = 4096;
-// topLight.shadow.mapSize.height = 4096;
-//topLight.shadow.radius = 6;
+topLight.castShadow = true;
+topLight.shadow.mapSize.set(2048, 2048);
+topLight.shadow.radius = 6;
 scene.add(topLight);
-
-// Criar Luz Ambiente
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+scene.add(new THREE.AmbientLight(0xffffff, 0.5)); // Luz ambiente
 
 // Criar Câmera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
 camera.position.set(0, 0, 6.5);
 
 // Carregar Modelo GLTF
 const loader = new GLTFLoader();
-loader.load(
-  '../modelos/t_shirt_hoodie_3d_model/scene.gltf',
-  (gltfScene) => {
-    gltfModel = gltfScene.scene;
+loader.load('../modelos/t_shirt_hoodie_3d_model/scene.gltf', (gltf) => {
+    state.gltfModel = gltf.scene;
 
-    // Ativar sombras para o modelo
-    gltfModel.traverse((child) => {
-      if (child.isMesh) {
-       // child.castShadow = true;
-      }
+    // Ativar sombras no modelo
+    gltf.scene.traverse((child) => {
+        if (child.isMesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+        }
     });
 
-    scene.add(gltfModel);
-  },
-  undefined,
-  (error) => {
-    console.error("Erro ao carregar o modelo GLTF:", error);
-  }
-);
+    scene.add(gltf.scene);
+    updateSize();
+}, undefined, (error) => console.error("Erro ao carregar modelo:", error));
 
 // Função de Animação
 function animate() {
-  requestAnimationFrame(animate);
-  renderer.render(scene, camera);
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
 }
 
 // Atualiza o tamanho da tela
 function updateSize() {
-  const width = container.clientWidth;
-  const height = container.clientHeight;
-  renderer.setSize(width, height);
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
 }
 
-// Função para rotação do modelo com click and drag
+// Eventos de mouse (Desktop)
 container.addEventListener("mousedown", (e) => {
-  isMouseDown = true;
-  lastMouseX = e.clientX;
-  lastMouseY = e.clientY;
+    state.isInteracting = true;
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
 });
 
 container.addEventListener("mousemove", (e) => {
-  if (isMouseDown && gltfModel) {
-    let deltaX = e.clientX - lastMouseX;
-    let deltaY = e.clientY - lastMouseY;
+    if (!state.isInteracting || !state.gltfModel) return;
 
-    gltfModel.rotation.y += deltaX * 0.005; // Rotação no eixo Y
-    gltfModel.rotation.x += deltaY * 0.005; // Rotação no eixo X
+    state.gltfModel.rotation.y += (e.clientX - state.lastX) * 0.005;
+    state.gltfModel.rotation.x += (e.clientY - state.lastY) * 0.005;
 
-    lastMouseX = e.clientX;
-    lastMouseY = e.clientY;
-  }
+    state.lastX = e.clientX;
+    state.lastY = e.clientY;
 });
 
-container.addEventListener("mouseup", () => {
-  isMouseDown = false;
+["mouseup", "mouseleave"].forEach(event =>
+    container.addEventListener(event, () => state.isInteracting = false)
+);
+
+// Eventos de toque (Mobile)
+container.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 1) {
+        // Início do toque único (rotação)
+        state.isInteracting = true;
+        state.lastX = e.touches[0].clientX;
+        state.lastY = e.touches[0].clientY;
+    } else if (e.touches.length === 2) {
+        // Início do gesto de pinça (zoom)
+        state.isInteracting = false;
+        state.initialPinchDistance = getPinchDistance(e.touches);
+    }
 });
 
-container.addEventListener("mouseleave", () => {
-  isMouseDown = false;
+container.addEventListener("touchmove", (e) => {
+    e.preventDefault(); // Impede rolagem da página
+
+    if (e.touches.length === 1 && state.isInteracting && state.gltfModel) {
+        // Rotação com um dedo
+        state.gltfModel.rotation.y += (e.touches[0].clientX - state.lastX) * 0.005;
+        state.gltfModel.rotation.x += (e.touches[0].clientY - state.lastY) * 0.005;
+
+        state.lastX = e.touches[0].clientX;
+        state.lastY = e.touches[0].clientY;
+    } else if (e.touches.length === 2 && state.initialPinchDistance) {
+        // Zoom com dois dedos (pinça)
+        const newDistance = getPinchDistance(e.touches);
+        const zoomFactor = newDistance / state.initialPinchDistance;
+        camera.position.z = Math.max(2, Math.min(20, camera.position.z / zoomFactor));
+
+        state.initialPinchDistance = newDistance;
+    }
 });
 
-// Função para fazer zoom in/out
+container.addEventListener("touchend", () => {
+    state.isInteracting = false;
+    state.initialPinchDistance = null;
+});
+
+// Função para calcular a distância entre dois toques (para zoom)
+function getPinchDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Função para fazer zoom in/out no scroll do mouse
 container.addEventListener("wheel", (e) => {
-  e.preventDefault();  // Impede a rolagem da página
-
-  // Verifica a direção da rolagem (para cima ou para baixo)
-  if (e.deltaY < 0) {
-    camera.position.z -= zoomSpeed; // Zoom In
-  } else {
-    camera.position.z += zoomSpeed; // Zoom Out
-  }
-
-  // Limitar o zoom para que a câmera não ultrapasse limites
-  camera.position.z = Math.max(Math.min(camera.position.z, 20), 2);
+    e.preventDefault(); // Impede a rolagem da página
+    camera.position.z = Math.max(2, Math.min(20, camera.position.z + (e.deltaY > 0 ? state.zoomSpeed : -state.zoomSpeed)));
 });
 
 // Eventos de resize
 window.addEventListener('resize', updateSize);
-updateSize();
+
 animate();
