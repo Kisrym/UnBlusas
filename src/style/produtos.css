@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
 }
 #three-container {
     width: 100%;
@@ -33,7 +34,7 @@ canvas {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 400px;
+    width: 100%;
     max-width: 90%;
     margin-top: 1rem;
     color: white;
@@ -101,60 +102,18 @@ textarea {
 
 @media (max-width: 768px) {
     #Container3D {
-        height: 20vh;
+        height: 100%;
     }
-    
-}
+    .configurador {
+        flex-direction: column-reverse;
+    }
+    .configurador-container {
+        height: auto;
+        width: auto;
+        padding: 1.5rem;
+    }
 
-@media (max-width: 480px) {
-    #Container3D {
+    #three-container {
         height: 40vh;
     }
-    .configurador {
-        flex-direction: column-reverse;
-    }
-    .configurador-container {
-        width: 90%;
-        padding: 1.5rem;
-    }
-
-    #three-container {
-        height: 39vh;
-    }
-}
-
-@media screen and (max-width: 415px) {
-    #Container3D {
-        height: 30vh;
-    }
-    .configurador {
-        flex-direction: column-reverse;
-    }
-    .configurador-container {
-        width: 90%;
-        padding: 1.5rem;
-    }
-
-    #three-container {
-        height: 33vh;
-    }
-    
-}
-
-@media screen and (max-width: 400px) {
-    #Container3D {
-        height: 30vh;
-    }
-    .configurador {
-        flex-direction: column-reverse;
-    }
-    .configurador-container {
-        width: 90%;
-        padding: 1.5rem;
-    }
-
-    #three-container {
-        height: 28vh;
-    }
-    
 }
