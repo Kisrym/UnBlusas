@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/contato.css" >
-    <title>UnBlusas</title>
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="../style/login.css">
 </head>
 <body>
     <div id="header-container"></div>
+    <div class="container">
+        <h2>Cadastro</h2>
+        <form id="cadastro-form">
+            <input type="text" id="nome" placeholder="Nome" required>
+            <input type="email" id="email" placeholder="E-mail" required>
+            <input type="password" id="senha" placeholder="Senha" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p id="mensagem"></p>
+    </div>
 
-    <h1>Contato</h1>
-    
-    <script src="../scripts/header.js" defer></script>
-
+    <script src="../scripts/login.js"></script>
 </body>
 </html>
