@@ -54,6 +54,25 @@ loader.load('../modelos/t_shirt_hoodie_3d_model/scene.gltf', (gltf) => {
     updateSize();
 }, undefined, (error) => console.error("Erro ao carregar modelo:", error));
 
+function changeTextureB64(base64) {
+    if (!state.gltfModel) return;
+
+    const image = new Image();
+    image.src = base64;
+    image.onload = () => {
+        const texture = new THREE.Texture(image);
+        texture.needsUpdate = true;
+        texture.flipY = false;
+
+        state.gltfModel.traverse((child) => {
+            if (child.isMesh && child.material) {
+                child.material.map = texture;
+                child.material.needsUpdate = true;
+            }
+        });
+    };
+}
+
 // Função de Animação
 function animate() {
     requestAnimationFrame(animate);
@@ -146,3 +165,4 @@ container.addEventListener("wheel", (e) => {
 window.addEventListener('resize', updateSize);
 
 animate();
+window.changeTextureB64 = changeTextureB64;

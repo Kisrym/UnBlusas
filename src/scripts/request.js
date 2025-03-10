@@ -1,4 +1,3 @@
-
 document.getElementById('generate-button').addEventListener('click', () => {
     const prompt = document.getElementById('texture-prompt').value;
     const size = '1024x1024';
@@ -12,11 +11,17 @@ document.getElementById('generate-button').addEventListener('click', () => {
     })
         .then(response => response.json())
         .then(data => {
-            if (data.image) {
+            if (!data.image) {
                 console.log(`Imagem gerada:\n${data.image}`);
+                if (window.changeTextureB64) {
+                    changeTextureB64(data.image);
+                }
+                else {
+                    console.error('Função changeTextureB64 não encontrada.');
+                }
             }
             else {
-                console.log(`Erro ao gerar imagem: ${data.error}`);
+                document.getElementById('error-text').innerText = data.error;
             }
         })
         .catch(error => {

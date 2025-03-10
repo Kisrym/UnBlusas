@@ -37,11 +37,12 @@ app.post('/generateimage', async (req, res) => {
         });
 
         const data = await response.json();
-        console.log(data);
+        if (!response.ok) {
+            return res.status(502).json({error: data['error']['message']});
+        }
         res.json({image: data.data[0].b64_json});
     }
     catch (error) {
-        console.error('Erro ao fazer requisição para a OpenAI:', error);
         res.status(500).json({ error: 'Erro ao chamar a API da OpenAI.' });
     }
 });
