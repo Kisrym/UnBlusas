@@ -97,8 +97,9 @@ textarea {
 
 @media (max-width: 768px) {
     #Container3D {
-        height: 50vh;
+        height: 20vh;
     }
+    
 }
 
 @media (max-width: 480px) {
@@ -112,4 +113,44 @@ textarea {
         width: 90%;
         padding: 1.5rem;
     }
+
+    #three-container {
+        height: 39vh;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    #Container3D {
+        height: 30vh;
+    }
+    .configurador {
+        flex-direction: column-reverse;
+    }
+    .configurador-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    #three-container {
+        height: 33vh;
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    #Container3D {
+        height: 30vh;
+    }
+    .configurador {
+        flex-direction: column-reverse;
+    }
+    .configurador-container {
+        width: 90%;
+        padding: 1.5rem;
+    }
+
+    #three-container {
+        height: 28vh;
+    }
+    
 }
