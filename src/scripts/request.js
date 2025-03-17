@@ -11,20 +11,19 @@ document.getElementById('generate-button').addEventListener('click', () => {
     })
         .then(response => response.json())
         .then(data => {
-            if (!data.image) {
+            if (data.image) {
                 console.log(`Imagem gerada:\n${data.image}`);
                 if (window.changeTextureB64) {
                     changeTextureB64(data.image);
-                }
-                else {
+                } else {
                     console.error('Função changeTextureB64 não encontrada.');
                 }
-            }
-            else {
+            } else {
                 document.getElementById('error-text').innerText = data.error;
             }
         })
         .catch(error => {
             console.error('Erro ao fazer requisição para a API:', error);
         });
+    
 });

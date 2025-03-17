@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 5000; // escolhera a port das variáveis de ambiente ou o valor padrão 5000
@@ -22,25 +23,37 @@ app.post('/generateimage', async (req, res) => {
     }
 
     try {
-        const response = await fetch('https://api.openai.com/v1/images/generations', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${API_KEY}`,
-            },
-            body: JSON.stringify({
-                prompt: prompt,
-                size: size,
-                n: 1, // numero de imagens
-                response_format: 'b64_json',
-            }),
-        });
+        // const response = await fetch('https://api.openai.com/v1/images/generations', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': `Bearer ${API_KEY}`,
+        //     },
+        //     body: JSON.stringify({
+        //         prompt: prompt,
+        //         size: size,
+        //         n: 1, // numero de imagens
+        //         response_format: 'b64_json',
+        //     }),
+        // });
 
-        const data = await response.json();
-        if (!response.ok) {
-            return res.status(502).json({error: data['error']['message']});
-        }
-        res.json({image: data.data[0].b64_json});
+        // const data = await response.json();
+
+        //////////////// TEMPORARIO PARA TESTES //////////////////////
+        fs.readFile('arquivo.txt', 'utf8', (err, data) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Erro ao ler o arquivo.' });
+            }
+            res.json({ image: `data:image/png;base64,${data}` }); // muda o prefixo pra nao identificar como url
+        });
+        
+        //////////////////////////////////////////////////////////////
+        
+        // if (!response.ok) {
+        //     return res.status(502).json({error: data['error']['message']});
+        // }
+        // return res.json({image: data.data[0].b64_json});
     }
     catch (error) {
         res.status(500).json({ error: 'Erro ao chamar a API da OpenAI.' });

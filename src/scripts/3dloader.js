@@ -64,12 +64,24 @@ function changeTextureB64(base64) {
         texture.needsUpdate = true;
         texture.flipY = false;
 
+        texture.repeat.set(1, 1); // textura se repete apenas 1 vez
+
         state.gltfModel.traverse((child) => {
-            if (child.isMesh && child.material) {
-                child.material.map = texture;
+            if (child.isMesh) {
+                if (child.material.map) {
+                    child.material.map.dispose(); // discarta a textura antiga
+                }
+
+                const newMaterial = new THREE.MeshBasicMaterial({
+                    map: texture,
+                });
+
+                child.material = newMaterial;
                 child.material.needsUpdate = true;
             }
         });
+
+        console.log('textura alterada');
     };
 }
 
