@@ -131,67 +131,6 @@ function updateSize() {
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
 }
-
-// Eventos de mouse (Desktop)
-container.addEventListener("mousedown", (e) => {
-    state.isInteracting = true;
-    state.lastX = e.clientX;
-    state.lastY = e.clientY;
-});
-
-container.addEventListener("mousemove", (e) => {
-    if (!state.isInteracting || !state.gltfModel) return;
-
-    state.gltfModel.rotation.y += (e.clientX - state.lastX) * 0.005;
-    state.gltfModel.rotation.x += (e.clientY - state.lastY) * 0.005;
-
-    state.lastX = e.clientX;
-    state.lastY = e.clientY;
-});
-
-["mouseup", "mouseleave"].forEach(event =>
-    container.addEventListener(event, () => state.isInteracting = false)
-);
-
-// Eventos de toque (Mobile)
-container.addEventListener("touchstart", (e) => {
-    if (e.touches.length === 1) {
-        // Início do toque único (rotação)
-        state.isInteracting = true;
-        state.lastX = e.touches[0].clientX;
-        state.lastY = e.touches[0].clientY;
-    } else if (e.touches.length === 2) {
-        // Início do gesto de pinça (zoom)
-        state.isInteracting = false;
-        state.initialPinchDistance = getPinchDistance(e.touches);
-    }
-});
-
-container.addEventListener("touchmove", (e) => {
-    e.preventDefault(); // Impede rolagem da página
-
-    if (e.touches.length === 1 && state.isInteracting && state.gltfModel) {
-        // Rotação com um dedo
-        state.gltfModel.rotation.y += (e.touches[0].clientX - state.lastX) * 0.005;
-        state.gltfModel.rotation.x += (e.touches[0].clientY - state.lastY) * 0.005;
-
-        state.lastX = e.touches[0].clientX;
-        state.lastY = e.touches[0].clientY;
-    } else if (e.touches.length === 2 && state.initialPinchDistance) {
-        // Zoom com dois dedos (pinça)
-        const newDistance = getPinchDistance(e.touches);
-        const zoomFactor = newDistance / state.initialPinchDistance;
-        camera.position.z = Math.max(2, Math.min(20, camera.position.z / zoomFactor));
-
-        state.initialPinchDistance = newDistance;
-    }
-});
-
-container.addEventListener("touchend", () => {
-    state.isInteracting = false;
-    state.initialPinchDistance = null;
-});
-
 // Eventos de resize
 window.addEventListener('resize', updateSize);
 
