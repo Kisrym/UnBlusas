@@ -7,7 +7,9 @@ body {
     display: flex;
     flex-direction: column;
 }
-
+h1 {
+    margin: 0;
+}
 /* Header stays at 10vh */
 header {
     background: transparent;
@@ -17,21 +19,27 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 2vh 50px;
+    padding-top: 1.6vh;
+    padding-left: 6vw;
+    padding-right: 6vw;
     height: 10vh;
 }
 
 .nav-left {
     display: flex;
-    gap: 40px;
+    gap: 2.5vw;
 }
 
 .nav-right {
     align-items: center;
     display: flex;
-    gap: 40px;
+    gap: 2.5vw;
 }
 
+.nav-center {
+    display: flex;
+    justify-content: center;
+}
 .nav-link {
     text-decoration: none;
     color: black;
@@ -40,20 +48,33 @@ header {
 
 .btn {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 1vh 2vh;
     background: black;
     color: white;
     text-decoration: none;
-    font-size: 18px;
-    border-radius: 5px;
+    font-size: 2vh;
+    border-radius: 4vh;
 }
 
 .btn:hover {
-    background: gray;
+    background: rgb(46, 46, 46);
 }
-
+.bigbtn {
+    margin-top: 10vh;
+    display: inline-block;
+    padding: 2vh 4vh;
+    background: black;
+    color: white;
+    text-decoration: none;
+    font-size: 4vh;
+    border-radius: 4vh;
+}
+.bigbtn:hover {
+    background: rgb(46, 46, 46);
+}
 /* This wrapper takes the full viewport height */
 .fullshootscreen {
+    position: relative; /* Ensures child elements can be positioned absolutely */
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -62,10 +83,17 @@ header {
 /* Container takes the remaining space inside .fullshootscreen */
 .container {
     display: flex;
-    align-items: center;
+    align-items: top;
     justify-content: space-between;
     flex-grow: 1; /* This makes it expand to fill remaining space */
     padding: 5%;
+}
+.three-container {
+    padding: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Moves it behind all other content */
 }
 
 .text-section {
@@ -73,26 +101,14 @@ header {
 }
 
 .text-section h1 {
-    font-size: 100px;
+    font-size: 11vh;
     font-weight: bold;
 }
 
 .text-section p {
-    font-size: 18px;
-    margin-top: 10px;
+    font-size: 3vh;
 }
 
-.image-section {
-    max-width: 45%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.image-section img {
-    width: 80%;
-    border-radius: 10px;
-}
 
 footer {
     background: black;
@@ -141,6 +157,7 @@ footer {
     padding-top: 10vh;
 }
 .apresentacao_container h1 {
+    margin: 0;
     font-size: 70px;
     font-weight: lighter;
 }
