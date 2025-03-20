@@ -39,7 +39,7 @@ camera.position.set(0, 0, 6.5);
 
 // Carregar Modelo GLTF
 const loader = new GLTFLoader();
-loader.load('../modelos/t_shirt_hoodie_3d_model/scene.gltf', (gltf) => {
+loader.load('../modelos/shirt_baked.glb', (gltf) => {
     state.gltfModel = gltf.scene;
 
     // Ativar sombras no modelo
@@ -64,7 +64,7 @@ function changeTextureB64(base64) {
         texture.needsUpdate = true;
         texture.flipY = false;
 
-        texture.repeat.set(1, 1); // textura se repete apenas 1 vez
+        //texture.repeat.set(1, 1); // textura se repete apenas 1 vez
 
         state.gltfModel.traverse((child) => {
             if (child.isMesh) {
@@ -170,7 +170,7 @@ function getPinchDistance(touches) {
 // Função para fazer zoom in/out no scroll do mouse
 container.addEventListener("wheel", (e) => {
     e.preventDefault(); // Impede a rolagem da página
-    camera.position.z = Math.max(2, Math.min(20, camera.position.z + (e.deltaY > 0 ? state.zoomSpeed : -state.zoomSpeed)));
+    camera.position.z = Math.max(0, Math.min(20, camera.position.z + (e.deltaY > 0 ? state.zoomSpeed : -state.zoomSpeed)));
 });
 
 // Eventos de resize
