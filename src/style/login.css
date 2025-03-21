@@ -71,7 +71,7 @@
 
 .input-container input {
     width: 100%;
-    padding: 12px 80px; /* Espaço para o ícone à esquerda */
+    padding: 12px 80px;
     border: none;
     color: white;
     outline: none;
@@ -124,7 +124,7 @@ input{
 
 }
 
-button, a {
+.menus button, a {
 
     font-size: 20px;
     display: block;
