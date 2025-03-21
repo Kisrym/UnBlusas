@@ -9,17 +9,14 @@
 </head>
 <body>
     <div id="header-container"></div>
-    <div class = "menus">
-        <div class="container left">
-            
-            <h1>UnBlusas</h1>
-            <h2>Seja Bem Vindo!</h2>
-            <a href="cadastro.html">Criar Conta</a>
-            <p id="mensagem"></p>
-        </div>
-        <div class="container right">
-            <h2 style="margin-bottom: 18px;">Login</h2>
-            <form id="login-form">
+    <div class = "menus cadastro">
+        <div class="container">
+            <h2 style="margin-bottom: 18px;">Cadastro</h2>
+            <form id="cadastro-form">
+                <div class = "input-container">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="nome" placeholder="Nome" required>
+                </div>
                 <div class = "input-container">
                     <i class="fas fa-envelope"></i>
                     <input type="email" id="lemail" placeholder="E-mail" required>
@@ -28,7 +25,7 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" id="lsenha" placeholder="Senha" required>
                 </div>
-                <button type="submit">Entrar</button>
+                <button type="submit">Cadastrar</button>
             </form>
             <p id="lmensagem"></p>
 
